@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MovieRecycler</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_search">Search</string>
+    <string name="btn_clear">Clear</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="tv_year">year</string>
+    <string name="enter_movie_name_here">Enter Movie Name here</string>
+    <string name="tv_plot">Plot</string>
+    <string name="lbl_plot">Plot:</string>
+    <string name="tv_actors">actors</string>
+    <string name="lbl_actors">Actors:</string>
+</resources>
