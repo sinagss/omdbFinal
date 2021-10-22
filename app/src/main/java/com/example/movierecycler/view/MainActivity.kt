@@ -7,7 +7,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.movierecycler.R
 import com.example.movierecycler.adapter.MovieAdapter
@@ -21,10 +23,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
 
-//        val navController = findNavController(R.id.nav_host_fragment)
+    override fun onStart() {
+        super.onStart()
+        val appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.searchFragment, R.id.favoritesFragment))
 
-//        binding.bottomNav.setupWithNavController(navHostFragment)
+        val navController = findNavController(R.id.nav_host_fragment)
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.bottomNav.setupWithNavController(navController)
     }
 }
