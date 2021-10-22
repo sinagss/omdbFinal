@@ -17,3 +17,12 @@ data class Search(
     val Year: String,
     val imdbID: String
 )
+
+data class FavoriteMovie(
+    val Actors: String,
+    val Plot: String,
+    val Poster: String,
+    val Title: String,
+    val Year: String,
+    val imdbID: String
+)

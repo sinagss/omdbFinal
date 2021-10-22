@@ -8,14 +8,14 @@ import androidx.room.Query
 @Dao
 interface MovieInfoDao {
     @Query("SELECT * FROM movies")
-    fun getAllMovies(): List<Movies>
+    suspend fun getAllMovies(): List<Movies>
 
     @Query("SELECT * FROM movies WHERE movieId = :movieId")
-    fun findById(movieId: Int): Movies
+    suspend fun findById(movieId: Int): Movies
 
     @Insert
-    fun saveMovieInfo(movie: Movies)
+    suspend fun saveMovieInfo(movie: Movies)
 
     @Delete
-    fun unSaveMovieInfo(movie: Movies)
+    suspend fun unSaveMovieInfo(movie: Movies)
 }

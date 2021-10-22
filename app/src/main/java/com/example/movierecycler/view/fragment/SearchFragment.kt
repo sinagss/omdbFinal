@@ -13,12 +13,18 @@ import com.example.movierecycler.databinding.FragmentSearchBinding
 import com.example.movierecycler.hideKeyboard
 import com.example.movierecycler.model.MovieSearch
 import com.example.movierecycler.showLongToast
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
     lateinit var binding: FragmentSearchBinding
+
+    @Inject
+    lateinit var retrofitInterface: RetroInterface
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +45,7 @@ class SearchFragment : Fragment() {
 
         binding.moviesRecycler.adapter = adapter
 
-        val retrofitInterface = RetroInterface.getInstance()
+//        val retrofitInterface = RetroInterface.getInstance()
 
         binding.btnSearch.setOnClickListener {
             val searchString = binding.etSearch.text.toString()

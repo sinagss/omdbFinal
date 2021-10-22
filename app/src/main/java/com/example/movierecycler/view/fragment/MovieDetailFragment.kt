@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.example.movierecycler.api.RetroInterface
 import com.example.movierecycler.databinding.FragmentMovieDetailBinding
 import com.example.movierecycler.loadUrl
@@ -15,13 +17,26 @@ import com.example.movierecycler.model.AppDatabase
 import com.example.movierecycler.model.MovieInfo
 import com.example.movierecycler.model.Movies
 import com.example.movierecycler.showLongToast
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 import kotlin.math.log
 
+@AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
     lateinit var binding: FragmentMovieDetailBinding
+
+    @Inject
+    lateinit var db: AppDatabase
+
+    @Inject
+    lateinit var retroInterface: RetroInterface
+
     val args by navArgs<MovieDetailFragmentArgs>()
 
     override fun onCreateView(
@@ -38,13 +53,9 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var movie: Movies? = null
-        val db = Room.databaseBuilder(
-            requireContext(),
-            AppDatabase::class.java,
-            "movie"
-        ).allowMainThreadQueries().build()
+//        val db: AppDatabase by inject()
 
-        val retroInterface = RetroInterface.getInstance()
+//        val retroInterface = RetroInterface.getInstance()
 
         Log.d("OMDB_ID", args.omdbId)
         retroInterface.searchMovieByID(args.omdbId).enqueue(
@@ -75,10 +86,15 @@ class MovieDetailFragment : Fragment() {
             }
         )
 
+//        val saved = getSavedStatus(db, movie)
+
         binding.btnSave.setOnClickListener {
-            db.movieDao().saveMovieInfo(movie!!)
+            lifecycleScope.launch(Dispatchers.IO) { db.movieDao().saveMovieInfo(movie!!) }
             showLongToast(context, "Movie info of ${movie!!.movieTitle} added to db")
         }
     }
 
+//    private fun getSavedStatus(db: AppDatabase, movie: Movies?): Boolean =
+//        db.movieDao().findById(movie!!.movieId).saved
+//
 }
