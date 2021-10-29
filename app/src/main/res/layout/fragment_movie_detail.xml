@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:isScrollContainer="true"
     android:padding="10dp"
     tools:context=".view.fragment.MovieDetailFragment">
 
@@ -14,6 +15,7 @@
         android:elevation="15dp"
         android:orientation="vertical"
         app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +29,7 @@
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:id="@+id/ivMoviePoster"
                 android:layout_width="350dp"
-                android:layout_height="400dp"
+                android:layout_height="350dp"
                 android:layout_margin="10dp"
                 android:elevation="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +49,7 @@
                 app:layout_constraintStart_toStartOf="@id/ivMoviePoster"
                 app:layout_constraintTop_toBottomOf="@id/ivMoviePoster" />
 
+
             <TextView
                 android:id="@+id/lblActors"
                 android:layout_width="wrap_content"
@@ -55,43 +58,45 @@
                 android:text="@string/lbl_actors"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtMovieTitle" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvActors" />
 
             <TextView
                 android:id="@+id/tvActors"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:scrollHorizontally="false"
                 android:text="@string/tv_actors"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toRightOf="@id/lblActors"
-                app:layout_constraintStart_toEndOf="@id/lblActors"
-                app:layout_constraintTop_toBottomOf="@id/txtMovieTitle" />
-
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblActors"
+                app:layout_constraintTop_toBottomOf="@+id/txtMovieTitle" />
 
             <TextView
                 android:id="@+id/lblPlot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
                 android:text="@string/lbl_plot"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/tvActors"
-                app:layout_constraintTop_toBottomOf="@id/lblActors" />
+                app:layout_constraintEnd_toEndOf="@+id/lblActors"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvActors" />
 
             <TextView
                 android:id="@+id/tvPlot"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:padding="5dp"
                 android:scrollHorizontally="false"
                 android:text="@string/tv_plot"
                 android:textSize="14sp"
-                app:layout_constraintLeft_toRightOf="@id/lblPlot"
-                app:layout_constraintTop_toBottomOf="@id/tvActors" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lblPlot"
+                app:layout_constraintTop_toBottomOf="@+id/tvActors" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

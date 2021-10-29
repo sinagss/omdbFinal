@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.movierecycler.adapter.MovieAdapter
 import com.example.movierecycler.api.RetroInterface
@@ -14,6 +15,8 @@ import com.example.movierecycler.hideKeyboard
 import com.example.movierecycler.model.MovieSearch
 import com.example.movierecycler.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,28 +48,22 @@ class SearchFragment : Fragment() {
 
         binding.moviesRecycler.adapter = adapter
 
-//        val retrofitInterface = RetroInterface.getInstance()
-
         binding.btnSearch.setOnClickListener {
             val searchString = binding.etSearch.text.toString()
             showLongToast(requireContext(), "Searching for ${searchString}!")
 
             it.hideKeyboard()
-            retrofitInterface.searchMovieByTitle(searchString)
-                .enqueue(object : Callback<MovieSearch> {
-                    override fun onResponse(
-                        call: Call<MovieSearch>,
-                        response: Response<MovieSearch>
-                    ) {
-                        adapter.submitList(response.body()?.Search)
-                    }
 
-                    override fun onFailure(call: Call<MovieSearch>, t: Throwable) {
-                        Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
-                    }
-                })
+            lifecycleScope.launch(Dispatchers.Main) {
+                try {
+                    val result = retrofitInterface.searchMovieByTitle(searchString)
+                    adapter.submitList(result.Search)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
         }
 
-        binding.btnClear.setOnClickListener { binding.btnSearch.text = "" }
+        binding.btnClear.setOnClickListener { binding.etSearch.setText("") }
     }
 }

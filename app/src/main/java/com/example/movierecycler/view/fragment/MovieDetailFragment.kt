@@ -19,6 +19,7 @@ import com.example.movierecycler.model.Movies
 import com.example.movierecycler.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import retrofit2.Call
@@ -30,6 +31,8 @@ import kotlin.math.log
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
     lateinit var binding: FragmentMovieDetailBinding
+
+    private lateinit var movieInfo: MovieInfo
 
     @Inject
     lateinit var db: AppDatabase
@@ -53,48 +56,49 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var movie: Movies? = null
-//        val db: AppDatabase by inject()
 
-//        val retroInterface = RetroInterface.getInstance()
+        val movieInfoResult = lifecycleScope.launch {
+            retroInterface.searchMovieByID(args.omdbId)
+        }
 
-        Log.d("OMDB_ID", args.omdbId)
-        retroInterface.searchMovieByID(args.omdbId).enqueue(
-            object : Callback<MovieInfo> {
-                override fun onResponse(call: Call<MovieInfo>, response: Response<MovieInfo>) {
-                    val responseBody = response.body()
-                    Log.d("RESPONSE", responseBody.toString())
-                    binding.txtMovieTitle.text = responseBody?.Title
-                    binding.tvActors.text = responseBody?.Actors
-                    binding.tvPlot.text = responseBody?.Plot
-                    binding.ivMoviePoster.loadUrl(responseBody?.Poster!!)
 
-                    movie = Movies(
-                        0,
-                        args.omdbId,
-                        responseBody.Title,
-                        responseBody.Actors,
-                        responseBody.Plot
-                    )
-                }
 
-                override fun onFailure(call: Call<MovieInfo>, t: Throwable) {
-                    showLongToast(context, t.toString())
-                    Log.d("RESPONSE_ERROR", t.toString())
-                    Log.d("RESPONSE_ERROR", t.message.toString())
-                    Log.d("RESPONSE_ERROR", t.stackTraceToString())
-                }
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                movieInfo = retroInterface.searchMovieByID(args.omdbId)
+                movie = Movies(
+                    0,
+                    args.omdbId,
+                    movieInfo.Title,
+                    movieInfo.Actors,
+                    movieInfo.Plot
+                )
+            } catch (e: Exception) {
+                Log.d("TAG", e.toString())
             }
-        )
+            launch(Dispatchers.Main) {
+                loadMovieInfoIntoView(movieInfo)
+            }
+        }
 
-//        val saved = getSavedStatus(db, movie)
+
 
         binding.btnSave.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) { db.movieDao().saveMovieInfo(movie!!) }
-            showLongToast(context, "Movie info of ${movie!!.movieTitle} added to db")
+            lifecycleScope.launch(Dispatchers.IO) {
+                db.movieDao().saveMovieInfo(movie!!)
+                launch(Dispatchers.Main) {
+                    showLongToast(context, "Movie info of ${movie!!.movieTitle} added to db")
+
+                }
+            }
         }
     }
 
-//    private fun getSavedStatus(db: AppDatabase, movie: Movies?): Boolean =
-//        db.movieDao().findById(movie!!.movieId).saved
-//
+    fun loadMovieInfoIntoView(movieInfo: MovieInfo) {
+        binding.txtMovieTitle.text = movieInfo.Title
+        binding.tvActors.text = movieInfo.Actors
+        binding.tvPlot.text = movieInfo.Plot
+        binding.ivMoviePoster.loadUrl(movieInfo.Poster)
+    }
+
 }

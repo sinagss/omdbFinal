@@ -17,14 +17,15 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.movierecycler.view.fragment.MovieDetailFragment"
-        android:label="fragment_movie_detail"
-        tools:layout="@layout/fragment_movie_detail" >
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_detail">
         <argument
             android:name="omdbId"
             app:argType="string" />
         <action
             android:id="@+id/action_movieDetailFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -34,5 +35,8 @@
         <action
             android:id="@+id/action_favoritesFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 </navigation>

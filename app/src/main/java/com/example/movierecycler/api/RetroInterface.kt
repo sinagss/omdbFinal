@@ -12,30 +12,30 @@ const val APIKEY: String = "2898c254"
 
 interface RetroInterface {
     @GET("/")
-    fun searchMovieByTitle(
+    suspend fun searchMovieByTitle(
         @Query("s") name: String,
         @Query("apikey") apiKey: String = APIKEY
-    ): Call<MovieSearch>
+    ): MovieSearch
 
     @GET("/")
-    fun searchMovieByID(
+    suspend fun searchMovieByID(
         @Query("i") id: String,
         @Query("apikey") apiKey: String = APIKEY
-    ): Call<MovieInfo>
+    ): MovieInfo
 
 
-    companion object {
-        var retroInterface: RetroInterface? = null
-
-        fun getInstance(): RetroInterface {
-            if (retroInterface == null) {
-                val retrofit = Retrofit.Builder()
-                    .baseUrl("https://www.omdbapi.com")
-                    .addConverterFactory(MoshiConverterFactory.create())
-                    .build()
-                retroInterface = retrofit.create(RetroInterface::class.java)
-            }
-            return retroInterface!!
-        }
-    }
+//    companion object {
+//        var retroInterface: RetroInterface? = null
+//
+//        fun getInstance(): RetroInterface {
+//            if (retroInterface == null) {
+//                val retrofit = Retrofit.Builder()
+//                    .baseUrl("https://www.omdbapi.com")
+//                    .addConverterFactory(MoshiConverterFactory.create())
+//                    .build()
+//                retroInterface = retrofit.create(RetroInterface::class.java)
+//            }
+//            return retroInterface!!
+//        }
+//    }
 }
