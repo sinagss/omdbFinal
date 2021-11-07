@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.movierecycler.base.AppDatabase
@@ -26,6 +27,8 @@ class MovieDetailFragment : Fragment() {
 
     private lateinit var movieInfo: MovieInfo
 
+    private val viewModel by viewModels<MovieDetailViewModel>()
+
     @Inject
     lateinit var db: AppDatabase
 
@@ -40,14 +43,13 @@ class MovieDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
-//        return super.onCreateView(inflater, container, savedInstanceState)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var movie: Movies? = null
+//        var movie: Movies? = null
 
         val movieInfoResult = lifecycleScope.launch {
             retroInterface.searchMovieByID(args.omdbId)
@@ -55,38 +57,42 @@ class MovieDetailFragment : Fragment() {
 
 
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                movieInfo = retroInterface.searchMovieByID(args.omdbId)
-                movie = Movies(
-                    0,
-                    args.omdbId,
-                    movieInfo.Title,
-                    movieInfo.Actors,
-                    movieInfo.Plot
-                )
-            } catch (e: Exception) {
-                Log.d("TAG", e.toString())
-            }
-            launch(Dispatchers.Main) {
-                loadMovieInfoIntoView(movieInfo)
-            }
+
+        viewModel.searchMovieById(args.omdbId)
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            loadMovieInfoIntoView(it)
         }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            try {
+//                movieInfo = retroInterface.searchMovieByID(args.omdbId)
+//                movie = Movies(
+//                    0,
+//                    args.omdbId,
+//                    movieInfo.Title,
+//                    movieInfo.Actors,
+//                    movieInfo.Plot
+//                )
+//            } catch (e: Exception) {
+//                Log.d("TAG", e.toString())
+//            }
+//            launch(Dispatchers.Main) {
+//                loadMovieInfoIntoView(movieInfo)
+//            }
+//        }
 
 
-
-        binding.btnSave.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                db.movieDao().saveMovieInfo(movie!!)
-                launch(Dispatchers.Main) {
-                    showLongToast(context, "Movie info of ${movie!!.movieTitle} added to db")
-
-                }
-            }
-        }
+//        binding.btnSave.setOnClickListener {
+//            lifecycleScope.launch(Dispatchers.IO) {
+//                db.movieDao().saveMovieInfo(movie!!)
+//                launch(Dispatchers.Main) {
+//                    showLongToast(context, "Movie info of ${movie!!.movieTitle} added to db")
+//
+//                }
+//            }
+//        }
     }
 
-    fun loadMovieInfoIntoView(movieInfo: MovieInfo) {
+    private fun loadMovieInfoIntoView(movieInfo: MovieInfo) {
         binding.txtMovieTitle.text = movieInfo.Title
         binding.tvActors.text = movieInfo.Actors
         binding.tvPlot.text = movieInfo.Plot
