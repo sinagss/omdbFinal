@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:isScrollContainer="true"
     android:padding="10dp"
-    tools:context=".view.fragment.MovieDetailFragment">
+    tools:context=".features.detail.MovieDetailFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

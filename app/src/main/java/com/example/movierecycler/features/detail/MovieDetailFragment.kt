@@ -1,4 +1,4 @@
-package com.example.movierecycler.view.fragment
+package com.example.movierecycler.features.detail
 
 import android.os.Bundle
 import android.util.Log
@@ -8,25 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.movierecycler.api.RetroInterface
+import com.example.movierecycler.base.AppDatabase
 import com.example.movierecycler.databinding.FragmentMovieDetailBinding
 import com.example.movierecycler.loadUrl
-import com.example.movierecycler.model.AppDatabase
 import com.example.movierecycler.model.MovieInfo
 import com.example.movierecycler.model.Movies
+import com.example.movierecycler.repository.network.RetroInterface
 import com.example.movierecycler.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
-import kotlin.math.log
 
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {

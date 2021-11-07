@@ -1,7 +1,8 @@
-package com.example.movierecycler.api
+package com.example.movierecycler.repository.network
 
 import com.example.movierecycler.model.MovieInfo
 import com.example.movierecycler.model.MovieSearch
+import dagger.Provides
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -22,20 +23,4 @@ interface RetroInterface {
         @Query("i") id: String,
         @Query("apikey") apiKey: String = APIKEY
     ): MovieInfo
-
-
-//    companion object {
-//        var retroInterface: RetroInterface? = null
-//
-//        fun getInstance(): RetroInterface {
-//            if (retroInterface == null) {
-//                val retrofit = Retrofit.Builder()
-//                    .baseUrl("https://www.omdbapi.com")
-//                    .addConverterFactory(MoshiConverterFactory.create())
-//                    .build()
-//                retroInterface = retrofit.create(RetroInterface::class.java)
-//            }
-//            return retroInterface!!
-//        }
-//    }
 }

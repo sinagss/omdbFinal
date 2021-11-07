@@ -1,7 +1,7 @@
-package com.example.movierecycler.di
+package com.example.movierecycler.base.di
 
 import androidx.room.Room
-import com.example.movierecycler.model.AppDatabase
+import com.example.movierecycler.base.AppDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

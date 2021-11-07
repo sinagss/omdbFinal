@@ -1,4 +1,4 @@
-package com.example.movierecycler.adapter
+package com.example.movierecycler.features.favorite
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movierecycler.databinding.MovieItemBinding
 import com.example.movierecycler.loadUrl
 import com.example.movierecycler.model.FavoriteMovie
-import com.example.movierecycler.model.Movies
 
 
 class FavMovieAdapter(val clickListener: (String) -> Unit) :

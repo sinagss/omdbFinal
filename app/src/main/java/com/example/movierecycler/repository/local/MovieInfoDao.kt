@@ -1,10 +1,10 @@
-package com.example.movierecycler.model
+package com.example.movierecycler.repository.local
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
+import com.example.movierecycler.model.Movies
 
 @Dao
 interface MovieInfoDao {

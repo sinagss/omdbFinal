@@ -1,9 +1,9 @@
-package com.example.movierecycler.di
+package com.example.movierecycler.base.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.movierecycler.api.RetroInterface
-import com.example.movierecycler.model.AppDatabase
+import com.example.movierecycler.base.AppDatabase
+import com.example.movierecycler.repository.network.RetroInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
