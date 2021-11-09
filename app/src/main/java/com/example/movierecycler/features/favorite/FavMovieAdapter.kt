@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movierecycler.databinding.MovieItemBinding
 import com.example.movierecycler.loadUrl
-import com.example.movierecycler.model.FavoriteMovie
+import com.example.movierecycler.model.FavoriteMovies
 
 
 class FavMovieAdapter(val clickListener: (String) -> Unit) :
-    ListAdapter<FavoriteMovie, FavMovieAdapter.FavMovieVH>(FavoriteMovieDiffUtils()) {
+    ListAdapter<FavoriteMovies, FavMovieAdapter.FavMovieVH>(FavoriteMovieDiffUtils()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavMovieVH =
         FavMovieVH(
@@ -24,24 +24,24 @@ class FavMovieAdapter(val clickListener: (String) -> Unit) :
     inner class FavMovieVH(private val binding: MovieItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(item: FavoriteMovie) {
-            binding.ivPoster.loadUrl(item.Poster)
-            binding.tvMovieTitle.text = item.Title
-            binding.tvYear.text = item.Year
+        fun onBind(item: FavoriteMovies) {
+            binding.ivPoster.loadUrl(item.poster)
+            binding.tvMovieTitle.text = item.title
+            binding.tvYear.text = item.year
             binding.root.setOnClickListener {
-                clickListener(item.imdbID)
+                clickListener(item.imdbId)
             }
         }
     }
 
-    class FavoriteMovieDiffUtils : DiffUtil.ItemCallback<FavoriteMovie>() {
-        override fun areItemsTheSame(oldItem: FavoriteMovie, newItem: FavoriteMovie) =
-            oldItem.imdbID == newItem.imdbID
+    class FavoriteMovieDiffUtils : DiffUtil.ItemCallback<FavoriteMovies>() {
+        override fun areItemsTheSame(oldItem: FavoriteMovies, newItem: FavoriteMovies) =
+            oldItem.imdbId == newItem.imdbId
 
-        override fun areContentsTheSame(oldItem: FavoriteMovie, newItem: FavoriteMovie) =
-            oldItem.Title == newItem.Title &&
-                    oldItem.Actors == newItem.Actors &&
-                    oldItem.Plot == newItem.Plot
+        override fun areContentsTheSame(oldItem: FavoriteMovies, newItem: FavoriteMovies) =
+            oldItem.title == newItem.title &&
+                    oldItem.actors == newItem.actors &&
+                    oldItem.plot == newItem.plot
 
     }
 }

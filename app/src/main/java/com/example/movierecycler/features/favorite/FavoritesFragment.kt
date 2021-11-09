@@ -5,22 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.movierecycler.databinding.FragmentFavoritesBinding
 import com.example.movierecycler.base.AppDatabase
-import com.example.movierecycler.model.FavoriteMovie
+import com.example.movierecycler.databinding.FragmentSearchBinding
+import com.example.movierecycler.model.FavoriteMovies
+import com.example.movierecycler.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
     lateinit var binding: FragmentFavoritesBinding
-    lateinit var favMovies: List<FavoriteMovie>
 
-//    private val viewModel by
-
-    @Inject
-    lateinit var db: AppDatabase
+    private val viewModel by viewModels<FavMovieViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,10 +42,14 @@ class FavoritesFragment : Fragment() {
             )
         }
 
-//        lifecycleScope.launch {
-//            favMovies = db.movieDao().getAllMovies()
-//            adapter.submitList(favMovies)
-//        }
+        binding.favRecycler.adapter = adapter
 
+        viewModel.liveData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.getFavMovies()
+        }
     }
 }

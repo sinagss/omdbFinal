@@ -17,7 +17,7 @@ data class FavoriteMovies(
     @ColumnInfo(name = "genre") val genre: String?,
     @ColumnInfo(name = "language") val language: String?,
     @ColumnInfo(name = "metascore") val metascore: String?,
-    @ColumnInfo(name = "poster") val poster: String?,
+    @ColumnInfo(name = "poster") val poster: String,
     @ColumnInfo(name = "rated") val rated: String?,
     @ColumnInfo(name = "released") val released: String?,
     @ColumnInfo(name = "runtime") val runtime: String?,
