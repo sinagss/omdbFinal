@@ -1,4 +1,4 @@
-package com.example.movierecycler.adapter
+package com.example.movierecycler.features.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

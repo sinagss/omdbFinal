@@ -28,7 +28,6 @@ class FavMovieAdapter(val clickListener: (String) -> Unit) :
             binding.ivPoster.loadUrl(item.poster)
             binding.tvMovieTitle.text = item.title
             binding.tvYear.text = item.year
-            binding.tvMetaScore.text = item.metascore
             binding.root.setOnClickListener {
                 clickListener(item.imdbId)
             }

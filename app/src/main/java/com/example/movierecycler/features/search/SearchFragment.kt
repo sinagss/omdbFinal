@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.movierecycler.adapter.MovieAdapter
 import com.example.movierecycler.databinding.FragmentSearchBinding
 import com.example.movierecycler.hideKeyboard
 import com.example.movierecycler.repository.network.RetroInterface

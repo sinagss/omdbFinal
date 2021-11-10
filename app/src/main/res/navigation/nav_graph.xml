@@ -2,7 +2,6 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph.xml"
     app:startDestination="@id/searchFragment">
 
     <fragment
@@ -34,7 +33,8 @@
         tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/searchFragment" />
         <action
             android:id="@+id/action_favoritesFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
