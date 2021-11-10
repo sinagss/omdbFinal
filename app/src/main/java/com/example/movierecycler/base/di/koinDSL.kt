@@ -15,9 +15,3 @@ val roomModule = module {
 
     }
 }
-
-//val retroInterfaceModule = module {
-//    single {
-//
-//    }
-//}

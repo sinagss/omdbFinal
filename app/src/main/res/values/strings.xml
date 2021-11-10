@@ -15,4 +15,6 @@
     <string name="menu_search">Search</string>
     <string name="menu_favorites">Favorites</string>
     <string name="btn_unsave">UNSAVE</string>
+    <string name="meta_score">Meta Score</string>
+    <string name="meta_score_lbl">Meta Score:</string>
 </resources>

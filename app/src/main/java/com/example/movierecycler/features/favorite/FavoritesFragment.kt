@@ -9,14 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.movierecycler.databinding.FragmentFavoritesBinding
-import com.example.movierecycler.base.AppDatabase
-import com.example.movierecycler.databinding.FragmentSearchBinding
-import com.example.movierecycler.model.FavoriteMovies
-import com.example.movierecycler.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {

@@ -8,7 +8,6 @@ import com.example.movierecycler.model.MovieInfo
 import com.example.movierecycler.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
